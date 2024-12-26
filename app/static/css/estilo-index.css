@@ -1,0 +1,397 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+
+body{
+	background-color: #1c2b48;
+	color:white;
+
+}
+
+/* Estilização do header */
+header {
+    background-color: #ffffff;
+    color: #fff;
+    min-height: 5em;
+   
+}
+
+header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.logo-container {
+    display: flex;
+    gap: 20px; /* Espaço entre as logos */
+    align-items: center;
+}
+
+.logo-container img {
+    max-height: 80px; /* Tamanho máximo das logos */
+    height: auto;
+}
+
+#descritivo-da-oferta{
+    background-image: url('fundo-lp-norden-v1.png');
+}
+
+
+
+h1 {
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+#btn-flutuante{
+    position: fixed;
+    top:90%;
+    left: 85%;
+
+    transform: translate(-50%, -50%); /* Ajuste o botão ao centro */
+    z-index: 9999; /* Garante que o botão fique por cima de outros elementos */
+}
+
+.text-auxiliar-btn-whatsapp{
+    position: absolute;
+    left: 0;
+    bottom: 100%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    
+
+
+}
+
+.btn-whatsapp-flutuante {
+     color: #25D366;
+    font-size: 90px; /* Tamanho do ícone ou texto */
+    background-color: white;
+    border-radius: 50%; /* Faz o botão ser circular */
+    width: 80px; /* Largura do botão */
+    height: 80px; /* Altura do botão igual à largura */
+    display: flex; /* Ativa o Flexbox para centralização */
+    align-items: center; /* Centraliza verticalmente */
+    justify-content: center; /* Centraliza horizontalmente */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+    margin: 0; /* Remove margens externas */
+    padding: 0; /* Remove espaçamentos internos */
+    box-sizing: border-box; /* Inclui borda no tamanho total */
+    cursor: pointer;
+}
+
+.fa-whatsapp{
+     color: #25D366;
+}
+
+
+
+.blink {
+    animation: blink-animation 5s steps(2, start) infinite;
+
+}
+
+#preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff; /* Cor de fundo do preloader */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999; /* Mantém o preloader acima de tudo */
+}
+
+.spinner {
+  width: 80px;
+  height: 80px;
+  border: 5px solid #ccc; /* Cor do círculo */
+  border-top: 5px solid #3498db; /* Cor do topo do spinner */
+  border-radius: 50%;
+  animation: spin 1s linear infinite; /* Animação contínua */
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+
+/* Definição da animação */
+@keyframes blink-animation {
+    0%, 50% {
+        opacity: 1; /* Totalmente visível */
+    }
+    51%, 100% {
+        opacity: 0; /* Totalmente invisível */
+    }
+}
+
+.box-shadow{
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5); /* Sombras suaves */
+}
+
+#text-btn-cadastra-se{
+    font-size: 1.5em;
+}
+
+
+
+/* Responsividade */
+@media (max-width: 767.99px) {
+    header .container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .logo-container {
+        justify-content: center;
+        gap: 20px;
+    }
+
+    #logo-af{
+        min-height: 6em;
+    }
+
+    #logo-norden{
+        min-height: 8em;
+    }
+
+    h1 {
+        font-size: 3em;
+    
+    }
+
+    #img-pronto-atendimento{
+	width: 100%;
+	z-index: -1;
+	}
+
+	#texto-img-pronto-atendimento{
+		position: relative;
+		top:-8em;
+	}
+
+	#texto-img-pronto-atendimento p{
+		font-size: 24px;
+		font-weight: 900;
+		text-shadow: 2px 2px black ;
+	}
+    
+    /* FORMULÁRIO */
+    #formulario{
+        position: relative;
+        top: -8em;
+    }
+
+    small{
+        font-size: 0.5em;
+        line-height: 0;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* SESSÃO COMPLEMENTAR */
+    #sessao-complementar{
+        position: relative;
+        top: -9em;
+    }
+
+    #btn-cadastra-se{
+        position: relative;
+        top: -8em;
+    }
+
+    #btn-cadastra-se a{
+        text-decoration: none;
+    }
+
+    #central-vendas{
+        position: relative;
+        top: -5em;
+    }
+
+    .font-size-central-vendas{
+        font-size: 1.5em;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+
+}
+
+/* Responsivo Tablets */
+@media (min-width: 768px) and (max-width: 1079.99px) {
+    header .container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .content-section{
+        width: 120%;
+    }
+
+    .logo-container {
+        justify-content: center;
+        gap: 20px;
+    }
+
+    #logo-af{
+        min-height: 6em;
+    }
+
+    #logo-norden{
+        min-height: 8em;
+    }
+
+    h1 {
+        font-size: 3em;
+    
+    }
+
+    #img-pronto-atendimento{
+    width: 100%;
+    z-index: -1;
+    }
+
+    #texto-img-pronto-atendimento{
+        position: relative;
+        top:-8em;
+    }
+
+    #texto-img-pronto-atendimento p{
+        font-size: 24px;
+        font-weight: 900;
+        text-shadow: 2px 2px black ;
+    }
+    
+    /* FORMULÁRIO */
+    #formulario{
+        position: relative;
+        top: -8em;
+    }
+
+    small{
+        font-size: 0.5em;
+        line-height: 0;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* SESSÃO COMPLEMENTAR */
+    #sessao-complementar{
+        position: relative;
+        top: -9em;
+    }
+
+    #btn-cadastra-se{
+        position: relative;
+        top: -8em;
+    }
+
+    #btn-cadastra-se a{
+        text-decoration: none;
+    }
+
+    #central-vendas{
+        position: relative;
+        top: -5em;
+    }
+
+    .font-size-central-vendas{
+        font-size: 1.5em;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+}
+
+@media (min-width: 1080px) {
+    html, body {
+        margin: 0;
+        padding: 0;
+        min-height: 1000px; /* Garante que o conteúdo ocupe a altura total da tela */
+    }
+
+    body {
+        display: flex;
+        flex-direction: column; /* Organiza o conteúdo de forma vertical */
+    }
+
+    header{
+        max-height: 5em;
+    }
+
+    main{
+        flex-grow: 1;
+    }
+    .content-section {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: flex-start;
+        width: 120%;
+    }
+
+    #img-pronto-atendimento {
+        flex: 1 1 40%; /* Imagem ocupa 40% da largura */
+        max-width: 40%;
+        margin-right: 20px;
+    }
+
+    #texto-img-pronto-atendimento {
+        flex: 1 1 50%; /* Carousel ocupa 50% da largura */
+        max-width: 50%;
+    }
+
+    #texto-img-pronto-atendimento h1 {
+        font-size: 5em;
+    }
+
+    /* Ajuste para colocar formulário e sessão complementar lado a lado */
+    #formulario {
+        display: inline-block;
+        width: 45%; /* 45% da largura total */
+        vertical-align: top;
+        margin-top:1em;
+        margin-right: 2%; /* Espaço entre o formulário e a sessão complementar */
+        padding: 3em;
+
+    }
+    
+    #sessao-complementar {
+        display: inline-block;
+        width: 45%; /* 45% da largura total */
+        text-align: center;
+        margin-top:1em;
+    }
+
+    #sessao-complementar img {
+        max-width: 100%; /* Redimensiona a imagem complementar */
+        height: auto;
+    }
+
+    #btn-cadastra-se{
+        position: absolute;
+        top:1250px;
+        left: 5%;
+        
+    }
+
+    .font-size-central-vendas{
+        font-size: 3em;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    
+}
