@@ -17,7 +17,6 @@ __pycache__/
 # Ignorar arquivos estáticos gerados
 static/
 
-
 # Ignorar arquivos temporários criados pelo sistema
 *.log
 *.pot
