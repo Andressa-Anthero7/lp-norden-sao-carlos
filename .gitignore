@@ -1,0 +1,24 @@
+# Ignorar o ambiente virtual
+lp-unimed-venv/
+linux-venv/
+
+# Ignorar configurações do PyCharm/VSCode
+.idea/
+.vscode/
+
+# Ignorar arquivos gerados pelo Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignorar arquivos de banco de dados local
+*.sqlite3
+
+# Ignorar arquivos estáticos gerados
+static/
+
+# Ignorar arquivos temporários criados pelo sistema
+*.log
+*.pot
+*.pyc
+.DS_Store
