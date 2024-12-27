@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!--{% load static %}-->
+{% load static %}
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
     <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="estilo-index.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/estilo-index.css' %}">
      
 
 
@@ -28,14 +28,14 @@
 <body>
          <!-- Preloader -->
       <div id="preloader">
-        <div class="spinner "><img src="logo.webp" width="70px" height="70px"></div>
+        <div class="spinner "><img src="{% static 'img/logo.webp' %}" width="70px" height="70px"></div>
       </div>
 
     <header>
         <div class="container">
             <div class="logo-container m-0 p-0">
-                <img class="img img-fluid" id="logo-af" src="logo.webp" alt="AF Saúde" loading="lazy">
-                <img class="img img-fluid" id="logo-norden" src="norden-sem-fundo.png" alt="Norden" loading="lazy">
+                <img class="img img-fluid" id="logo-af" src="{% static 'img/logo.webp' %}" alt="AF Saúde" loading="lazy">
+                <img class="img img-fluid" id="logo-norden" src="{% static 'img/norden-sem-fundo.png' %}" alt="Norden" loading="lazy">
             </div>
         </div>
     </header>
@@ -44,34 +44,34 @@
         <div class="container container-conteudo m-0 p-0">
             
             <div class="content-section m-0 p-0">
-                <img class="img img-fluid rounded" id="img-pronto-atendimento" src="pronto-atendimento.jpg" alt="Pronto Atendimento" loading="lazy"> 
+                <img class="img img-fluid rounded" id="img-pronto-atendimento" src="{% static 'img/pronto-atendimento.jpg' %}" alt="Pronto Atendimento" loading="lazy"> 
                <div id="texto-img-pronto-atendimento">
                     <h1 class="p-2 mb-2">O que o Norden faz por você.</h1>
                     <!-- CAROUSEL TEXTOS -->
                     <div id="carousel-textos" class="carousel slide" data-ride="carousel">
                       <div class="carousel-inner">
                         <div class="carousel-item active">
-                          <img class="d-block w-100" src="banner-1.png" alt="Banner-1" loading="lazy">
+                          <img class="d-block w-100" src="{% static 'img/banner-1.png' %}" alt="Banner-1" loading="lazy">
                         </div>
 
                         <div class="carousel-item">
-                          <img class="d-block w-100" src="banner-2.png" alt="Banner-2" loading="lazy">
+                          <img class="d-block w-100" src="{% static 'img/banner-2.png' %}" alt="Banner-2" loading="lazy">
                         </div>
 
                         <div class="carousel-item">
-                          <img class="d-block w-100" src="banner-3.png" alt="Banner-3" loading="lazy">
+                          <img class="d-block w-100" src="{% static 'img/banner-3.png' %}" alt="Banner-3" loading="lazy">
                         </div>
 
                         <div class="carousel-item">
-                          <img class="d-block w-100" src="banner-4.png" alt="Banner-4" loading="lazy">
+                          <img class="d-block w-100" src="{% static 'img/banner-4.png' %}" alt="Banner-4" loading="lazy">
                         </div>
 
                         <div class="carousel-item">
-                          <img class="d-block w-100" src="banner-5.png" alt="Banner-5" loading="lazy">
+                          <img class="d-block w-100" src="{% static 'img/banner-5.png' %}" alt="Banner-5" loading="lazy">
                         </div>
 
                         <div class="carousel-item">
-                          <img class="d-block w-100" src="banner-6.png" alt="Banner-6" loading="lazy">
+                          <img class="d-block w-100" src="{% static 'img/banner-6.png' %}" alt="Banner-6" loading="lazy">
                         </div>
 
                       </div>
@@ -147,7 +147,7 @@
 
                 <!-- COMPLEMENTO -->
                 <div id="sessao-complementar">
-                     <img src="img-complemento-v2.png" class="img img img-fluid" loading="lazy">
+                     <img src="{% static 'img/img-complemento-v2.png' %}" class="img img img-fluid" loading="lazy">
                  </div>
 
                  
@@ -155,7 +155,7 @@
                  <!-- BTN FAZER COTAÇÃO -->
                 <div id="btn-cadastra-se" class="text-center text-white">
                     <!-- MODELO APONTANDO AQUI -->
-                    <img src="modelo-medica-v2.png" id="modelo-apontando" alt="Modelo apontando a descriçao" loading="lazy">
+                    <img src="{% static 'img/modelo-medica-v2.png' %}" id="modelo-apontando" alt="Modelo apontando a descriçao" loading="lazy">
                     <div id="text-btn-cadastra-se" class="btn btn-warning p-3 col-10 font-weight-bold">
                         <a  href="#formulario">Cadastre-se</a>
                     </div>
@@ -209,7 +209,7 @@
     </footer>
    
     <!-- jS -->
-     <script type="text/javascript" src="script-index.js"></script>
+     <script type="text/javascript" src="{% static 'js/script-index.js' %}"></script>
     
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>

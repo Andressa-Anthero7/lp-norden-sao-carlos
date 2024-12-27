@@ -1,11 +1,11 @@
 *{
-	margin: 0;
-	padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 body{
-	background-color: #1c2b48;
-	color:white;
+    background-color: #1c2b48;
+    color:white;
 
 }
 
@@ -176,20 +176,20 @@ h1 {
     }
 
     #img-pronto-atendimento{
-	width: 100%;
-	z-index: -1;
-	}
+    width: 100%;
+    z-index: -1;
+    }
 
-	#texto-img-pronto-atendimento{
-		position: relative;
-		top:-8em;
-	}
+    #texto-img-pronto-atendimento{
+        position: relative;
+        top:-8em;
+    }
 
-	#texto-img-pronto-atendimento p{
-		font-size: 24px;
-		font-weight: 900;
-		text-shadow: 2px 2px black ;
-	}
+    #texto-img-pronto-atendimento p{
+        font-size: 24px;
+        font-weight: 900;
+        text-shadow: 2px 2px black ;
+    }
     
     /* FORMULÁRIO */
     #formulario{
