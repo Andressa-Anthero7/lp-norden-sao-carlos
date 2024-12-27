@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Norden- AF Saúde e Benefícios</title>
+    
+
+    <!-- NORMALIZE.CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+
+    <!-- Jquery CDN --> 
+     <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+
+    <!-- Boostrap 4 CDN  -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/estilo-dashboard.css' %}">
+     
+
+
+
+    <!-- Font Awesome 5 CDN -->
+    <script src="https://kit.fontawesome.com/a69cec9c91.js" crossorigin="anonymous"></script>
+</head>
+<body>
+         <!-- Preloader -->
+      <div id="preloader">
+        <div class="spinner "><img src="{% static 'img/logo.webp' %}" width="70px" height="70px"></div>
+      </div>
+
+    <header>
+        <div class="container">
+            <div class="logo-container m-0 p-0">
+                <img class="img img-fluid" id="logo-af" src="{% static 'img/logo.webp' %}" alt="AF Saúde" loading="lazy">
+                <img class="img img-fluid" id="logo-norden" src="{% static 'img/norden-sem-fundo.png' %}" alt="Norden" loading="lazy">
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- CONTAINER -->
+        <div class="container container-conteudo m-0 p-2 col-12">
+            <div class=" m-0 p-2">Olá,{{request.user|capfirst}}, você tem {{quantidade_leads|length}} Leads.</div>
+            <!-- CAIXA DE LEADS -->
+            <div class=" p-2">
+                <h2 class="text-white font-weight-bold no-wrap">Caixa de Leads</h2>
+                <div id="display-leads" class="border border-light rounded bg-white m-lg-2" >
+                    <ul class="">
+                         {% if leads %}
+                    {% for lead in leads %}
+                    <!-- BOX ITEM DO LEADS -->
+                    <li style="list-style: none;" >
+                        <div class="btn  text-dark" data-toggle="modal" data-target="#lead-{{ lead.pk }}">
+                            <strong>
+                                <span class="info-leads">Data: {{ lead.data_recebimento|slice:":16" }}</span>
+                                <span class="info-leads">Nome: {{ lead.nome_leads|capfirst }}</span>
+                                <span class="info-leads">Whatsapp: {{ lead.whats_app_leads}}</span>
+                            <strong> 
+                        </div>
+                    </li>
+                    <!--FINAL BOX ITEM DO LEADS -->
+                    <!-- Modal -->
+                    <div class="modal fade text-dark" id="lead-{{ lead.pk }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel"><span class="font-weight-bold" >NOME:</span> {{ lead.nome_leads }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <p><strong>Data:</strong> {{ lead.data_recebimento }}</p>
+                            <p><strong>Whatsapp:</strong> {{ lead.whats_app_leads }}</p>
+                            
+                          </div>
+                          <div class="modal-footer">
+                            
+                            <!-- Modal Deletar Leads -->
+                            <button  class="btn fas fa-trash-alt mr-5 p-2" style="color: red;font-size: 2em;" data-toggle="modal" data-target="#modal-delete-leads-{{lead.pk}}"></button>
+                            <div class="modal fade p-5 " id="modal-delete-leads-{{lead.pk}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Exclusão do Leads Id - {{lead.pk}}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body p-2 text-center">
+                                    <form class="p-3">
+                                        <div>Digite remover para confirmar a exclusão do Leads - Id-{{lead.pk}}</div>
+                                        <div>
+                                            <input class="col-12 form" type="text" placeholder="Digite remover e clique no botão Confirma Exclusão"></div>
+                                        </div>
+                                    </form>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-danger">Confirma Exclusão</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+
+
+
+
+
+
+
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                            <a class="btn btn-success" href="https://wa.me/55{{lead.whats_app_leads}}"  >
+                                <i class="fab fa-whatsapp text-white"> Iniciar Atendimento</i>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- FINAL DO Modal -->
+                    {% endfor %}
+                {% else %}
+                    <li>Não há leads</li>
+                {% endif %}
+                    </ul>
+                </div>
+            </div>
+            
+            
+
+        </div>
+        <!-- FINAL DO CONTAINER -->
+       
+    
+    </main>
+
+     <!-- FOOTER -->
+    <footer class="footer row justify-content-center align-items-center text-center p-3 text-white">
+        <i class="fa fa-copyright mr-2" aria-hidden="true"></i>
+        <div class="mr-2">Antherus - Desenvolvimento Web</div>
+        <small><i class="fa fa-whatsapp mr-1" aria-hidden="true"></i><span>(16) 99337-9492</span></small>
+    </footer>
+   
+    <!-- jS -->
+     <script type="text/javascript" src="{% static 'js/script-index.js' %}"></script>
+    
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+           
