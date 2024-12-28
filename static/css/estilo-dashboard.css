@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Oswald:wght@200..700&display=swap');
+
 *{
     margin: 0;
     padding: 0;
@@ -6,7 +8,7 @@
 body{
     background-color: #1c2b48;
     color:white;
-
+    font-family: "Kanit", sans-serif;
 }
 
 /* Estilização do header */
@@ -78,10 +80,36 @@ header .container {
     box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5); /* Sombras suaves */
 }
 
-#text-btn-cadastra-se{
-    font-size: 1.5em;
+#display-leads{
+    height: 90%;
+    overflow: auto;
 }
 
+li{
+    border:1px solid gray;
+    margin-bottom: 0.1em;
+
+}
+
+li:hover{
+    transform: scale(1.1);
+    -webkit-box-shadow: 0px 6px 13px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 6px 13px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 6px 13px 0px rgba(0,0,0,0.75);
+    max-width: 90%;
+    position: relative;
+    left: 5%;
+    border:none;
+    margin-bottom: 0.4em;
+    z-index: 1;
+    cursor: pointer;
+}
+
+footer{
+    position: absolute;
+    top: 90%;
+    text-align: center;
+}
 
 
 /* Responsividade */
@@ -108,8 +136,27 @@ header .container {
         font-size: 3em;
     }
 
-    
+    strong{
+        display: block;
+        text-align: left;
+    }
 
+    .info-leads{
+        display: block;
+    }
+
+    .modal-footer{
+        display: flex;
+    }
+
+    .modal-body input{
+        line-height: 2em;
+    }
+
+    #btn-fechar-modal-leads{
+        position: relative;
+        left: -1.5em;
+    }
 
 }
 
@@ -137,7 +184,32 @@ header .container {
         min-height: 8em;
     }
 
-    
+    .modal-footer{
+        display: flex;
+    }
+
+    .modal-body input{
+        line-height: 2em;
+    }
+
+    .fa-trash-alt{
+        position: relative;
+        left: -3em;
+    }
+
+    #btn-fechar-modal-leads{
+        position: relative;
+        left: -4em;
+    }
+
+     footer{
+        position: absolute;
+        top: 90%;
+        left:13em;
+        text-align: center;
+    }
+
+
 }
 
 @media (min-width: 1080px) {
@@ -159,62 +231,25 @@ header .container {
     main{
         flex-grow: 1;
     }
-    .content-section {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: flex-start;
-        width: 120%;
+
+    .fa-trash-alt{
+        position: relative;
+        left: -3em;
     }
 
-    #img-pronto-atendimento {
-        flex: 1 1 40%; /* Imagem ocupa 40% da largura */
-        max-width: 40%;
-        margin-right: 20px;
+    #btn-fechar-modal-leads{
+        position: relative;
+        left: -4em;
     }
 
-    #texto-img-pronto-atendimento {
-        flex: 1 1 50%; /* Carousel ocupa 50% da largura */
-        max-width: 50%;
-    }
-
-    #texto-img-pronto-atendimento h1 {
-        font-size: 5em;
-    }
-
-    /* Ajuste para colocar formulário e sessão complementar lado a lado */
-    #formulario {
-        display: inline-block;
-        width: 45%; /* 45% da largura total */
-        vertical-align: top;
-        margin-top:1em;
-        margin-right: 2%; /* Espaço entre o formulário e a sessão complementar */
-        padding: 3em;
-
+    .info-leads{
+        margin-right: 2em;
     }
     
-    #sessao-complementar {
-        display: inline-block;
-        width: 45%; /* 45% da largura total */
+    footer{
+        position: relative;
+        top: 90%;
         text-align: center;
-        margin-top:1em;
-    }
-
-    #sessao-complementar img {
-        max-width: 100%; /* Redimensiona a imagem complementar */
-        height: auto;
-    }
-
-    #btn-cadastra-se{
-        position: absolute;
-        top:1250px;
-        left: 5%;
-        
-    }
-
-    .font-size-central-vendas{
-        font-size: 3em;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
 
     

@@ -4,8 +4,9 @@ from django.utils.text import slugify
 
 class Leads(models.Model):
     nome_leads = models.CharField(max_length=50)
-    whats_app_leads = models.CharField(max_length=12)
-    data_recebimento = models.CharField(max_length=8)
+    whats_app_leads = models.CharField(max_length=15)
+    data_recebimento = models.CharField(max_length=26)
+    status_envelope = models.CharField(max_length=18, default='fa-envelope')
     slug = models.SlugField(null=False, unique=True)
 
     def __str__(self):

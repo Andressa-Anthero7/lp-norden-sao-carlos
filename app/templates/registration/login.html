@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AF Saúde e Benefícios - Unimed</title>
+
+    <!-- Jquery CDN -->
+    <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap 4 CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js'></script>
+
+    <!-- FontAwesome CDN -->
+    <script src="https://kit.fontawesome.com/a69cec9c91.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="fontawesome/css/all.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
+
+    <!-- CSS -->
+    <style type="text/css">
+        header {
+            background: rgb(0, 104, 55, 1);
+            background: -moz-linear-gradient(90deg, rgba(0, 104, 55, 1) 0%, rgba(47, 110, 63, 1) 100%);
+            background: -webkit-linear-gradient(90deg, rgba(0, 104, 55, 1) 0%, rgba(47, 110, 63, 1) 100%);
+            background: linear-gradient(90deg, rgba(0, 104, 55, 1) 0%, rgba(47, 110, 63, 1) 100%);
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Garante que a altura mínima seja a da tela */
+        }
+
+        form {
+            max-width: 60%;
+        }
+    </style>
+</head>
+
+<!-- Corpo do HTML -->
+<body>
+    <!-- Header da Página -->
+    <header id="header">
+        <!-- Imagem da Logo -->
+        <img src="{% static 'img/logo.png' %}" id="img-logo" width="150" height="130">
+    </header>
+
+    <!-- Container -->
+    <div class="container text-center">
+        {% if form.errors %}
+            <p class="text-center">Seu usuário e senha não coincidem. Tente novamente.</p>
+        {% endif %}
+
+        
+        
+        <div class="text-center">
+
+            <!-- Formulário de Login -->
+            <form method="post" action="{% url 'login' %}">
+                <h6 class="text-center p-3">Faça LOGIN com seu usuário e senha.</h6>
+                {% csrf_token %}
+
+                <!-- Campo de Usuário -->
+                <div class="m-1">
+                    <label for="username">Usuário:</label>
+                    <input type="text" id="username" name="username" class="form-control" required>
+                </div>
+
+                <!-- Campo de Senha -->
+                <div class="m-1">
+                    <label for="password">Senha:</label>
+                    <input type="password" id="password" name="password" class="form-control" required>
+                </div>
+
+                <!-- Botão de Login -->
+                <input class="text-center m-5 btn btn-warning" type="submit" value="Entrar" />
+                <input type="hidden" name="next" value="{{ next }}" />
+            </form>
+
+            <!-- Link para Recuperar Senha -->
+            <p class="text-center m-5"><a href="{% url 'password_reset' %}">Esqueceu a Senha?</a></p>
+        </div>
+    </div>
+    <!-- FINAL CONTAINER -->
+
+    <!-- FOOTER -->
+    <footer>
+        <i class="fa fa-copyright text-center" aria-hidden="true">Copyright</i>
+        <div>Antherus - Desenvolvimento Web</div>
+        <small><i class="fa fa-whatsapp mr-1" aria-hidden="true"></i><span>(16) 99337-9492</span></small>
+    </footer>
+
+    <!-- jQuery, Popper.js e Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

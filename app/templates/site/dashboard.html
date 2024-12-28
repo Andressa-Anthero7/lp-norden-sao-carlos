@@ -35,7 +35,7 @@
         <div class="container">
             <div class="logo-container m-0 p-0">
                 <img class="img img-fluid" id="logo-af" src="{% static 'img/logo.webp' %}" alt="AF Saúde" loading="lazy">
-                <img class="img img-fluid" id="logo-norden" src="{% static 'img/norden-sem-fundo.png' %}" alt="Norden" loading="lazy">
+                <img class="img img-fluid" id="logo-norden" src="{% static 'img/norden-sem-fundo.webp' %}" alt="Norden" loading="lazy">
             </div>
         </div>
     </header>
@@ -52,10 +52,48 @@
                          {% if leads %}
                     {% for lead in leads %}
                     <!-- BOX ITEM DO LEADS -->
-                    <li style="list-style: none;" >
-                        <div class="btn  text-dark" data-toggle="modal" data-target="#lead-{{ lead.pk }}">
+                    <li class="leads-{{lead.pk}}" style="list-style: none;" data-toggle="modal" data-target="#lead-{{ lead.pk }}" >
+                        <div class="btn  text-dark" >
                             <strong>
-                                <span class="info-leads">Data: {{ lead.data_recebimento|slice:":16" }}</span>
+                                <!-- Envelope do Leads -->
+                                <span class="mr-1"><i class="fas {{lead.status_envelope}}"></i></span>
+                                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+                                <script type="text/javascript">
+                                    $(document).ready(function() {
+                                        $('.leads-{{lead.pk}}').on('click', function() {
+                                            const formData = new FormData();
+
+                                            formData.append('status_envelope', 'fa-envelope-open-text');
+
+                                            const request = new XMLHttpRequest();
+                                            request.open('POST', 'http://127.0.0.1:8000/status_leads/{{lead.pk}}/', true);
+                                            
+                                            // Adiciona CSRF token no cabeçalho
+                                            const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                                            request.setRequestHeader('X-CSRFToken', csrftoken);
+                                        
+                                            // Define callback para sucesso ou erro
+                                            request.onload = function() {
+                                                if (request.status === 200) {
+                                                    
+                                                } else {
+                                                    //alert('Erro ao atualizar status.');
+                                                }
+                                            };
+
+                                            request.onerror = function() {
+                                                alert('Erro na requisição.');
+                                            };
+
+                                            request.send(formData);
+                                            
+
+                                        });
+                                    });
+                                </script>
+
+                                <span class="info-leads">Data: {{ lead.data_recebimento|slice:"8:10"}}/{{ lead.data_recebimento|slice:"5:7" }}/{{ lead.data_recebimento|slice:":4" }} - {{lead.data_recebimento|slice:"11:16"}} </span>
                                 <span class="info-leads">Nome: {{ lead.nome_leads|capfirst }}</span>
                                 <span class="info-leads">Whatsapp: {{ lead.whats_app_leads}}</span>
                             <strong> 
@@ -105,21 +143,23 @@
                               </div>
                             </div>
 
+                            <button id="btn-fechar-modal-leads" type="button" class="btn btn-secondary close-modal" data-dismiss="modal">Fechar</button>
 
-
-
-
-
-
-
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                            <a class="btn btn-success" href="https://wa.me/55{{lead.whats_app_leads}}"  >
+                            <a class="btn btn-success" href="https://wa.me/55{{lead.whats_app_leads}}"  target="_blank"   >
                                 <i class="fab fa-whatsapp text-white"> Iniciar Atendimento</i>
                             </a>
+
                           </div>
                         </div>
                       </div>
                     </div>
+                    <script type="text/javascript">
+                        $(document).ready(function() {
+                            $(document).on('blur','.modal', function(){
+                                window.location.reload();
+                            })
+                        });
+                    </script>
                     <!-- FINAL DO Modal -->
                     {% endfor %}
                 {% else %}

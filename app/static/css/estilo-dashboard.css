@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Oswald:wght@200..700&display=swap');
+
 *{
     margin: 0;
     padding: 0;
@@ -6,7 +8,7 @@
 body{
     background-color: #1c2b48;
     color:white;
-
+    font-family: "Kanit", sans-serif;
 }
 
 /* Estilização do header */
@@ -100,6 +102,7 @@ li:hover{
     border:none;
     margin-bottom: 0.4em;
     z-index: 1;
+    cursor: pointer;
 }
 
 footer{
@@ -133,16 +136,26 @@ footer{
         font-size: 3em;
     }
 
-    
-
     strong{
         display: block;
         text-align: left;
     }
 
     .info-leads{
-       
         display: block;
+    }
+
+    .modal-footer{
+        display: flex;
+    }
+
+    .modal-body input{
+        line-height: 2em;
+    }
+
+    #btn-fechar-modal-leads{
+        position: relative;
+        left: -1.5em;
     }
 
 }
@@ -171,6 +184,31 @@ footer{
         min-height: 8em;
     }
 
+    .modal-footer{
+        display: flex;
+    }
+
+    .modal-body input{
+        line-height: 2em;
+    }
+
+    .fa-trash-alt{
+        position: relative;
+        left: -3em;
+    }
+
+    #btn-fechar-modal-leads{
+        position: relative;
+        left: -4em;
+    }
+
+     footer{
+        position: absolute;
+        top: 90%;
+        left:13em;
+        text-align: center;
+    }
+
 
 }
 
@@ -193,9 +231,23 @@ footer{
     main{
         flex-grow: 1;
     }
+
+    .fa-trash-alt{
+        position: relative;
+        left: -3em;
+    }
+
+    #btn-fechar-modal-leads{
+        position: relative;
+        left: -4em;
+    }
+
+    .info-leads{
+        margin-right: 2em;
+    }
     
     footer{
-        position: absolute;
+        position: relative;
         top: 90%;
         text-align: center;
     }
