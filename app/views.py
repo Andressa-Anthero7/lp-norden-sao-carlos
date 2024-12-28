@@ -15,9 +15,6 @@ import hashlib
 
 # Create your views here.
 def index(request):
-    
-        
-
     if request.method == 'POST':
         # Capturar os dados do formulário
         nome_leads = request.POST.get('nome') 
