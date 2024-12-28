@@ -5,6 +5,13 @@ from datetime import datetime
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+# importação do webhook
+import subprocess
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json 
+import hmac
+import hashlib
 
 # Create your views here.
 def index(request):
@@ -85,3 +92,28 @@ def login_redirect(request):
     username = request.user.username
     url_redirect = f'/accounts/login/{username}/dashboard/'  # URL do dashboard
     return redirect(url_redirect)
+
+import hmac
+import hashlib
+
+@csrf_exempt
+def webhook(request):
+    if request.method == "POST":
+        try:
+            secret = b'minha_senha_secreta'  # Mesmo valor configurado no GitHub
+            signature = request.headers.get('X-Hub-Signature-256', '')
+            payload = request.body
+            mac = hmac.new(secret, msg=payload, digestmod=hashlib.sha256)
+            expected_signature = f"sha256={mac.hexdigest()}"
+
+            if not hmac.compare_digest(signature, expected_signature):
+                return JsonResponse({'error': 'Invalid signature'}, status=403)
+
+            payload = json.loads(payload)
+            if payload.get('ref') == 'refs/heads/dev':
+                subprocess.call(['/home/ubuntu/deploy.sh'])
+                return JsonResponse({'status': 'Deployed successfully'}, status=200)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+
+    return JsonResponse({'message': 'Invalid request'}, status=400)

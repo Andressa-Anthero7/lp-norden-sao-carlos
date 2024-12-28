@@ -10,6 +10,7 @@ urlpatterns = [
     path('accounts/login/', views.custom_login, name='login'),  # URL para login
     path('accounts/login/redirect/', views.login_redirect, name='login_redirect'),  # URL para redirecionamento após login
     path('accounts/login/<str:user>/dashboard/', views.dashboard, name='user_dashboard'),  # Nome alterado para evitar conflito
+    path('webhook/', views.webhook, name='webhook'),
     
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 ]
