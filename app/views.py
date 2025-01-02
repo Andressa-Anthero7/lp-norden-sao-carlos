@@ -100,7 +100,8 @@ def webhook(request):
     if request.method == "POST":
         try:
             # Obtém o segredo da variável de ambiente (melhor prática de segurança)
-            secret = os.getenv('GITHUB_WEBHOOK_SECRET').encode('utf-8')  # Certifique-se de definir essa variável no servidor
+            #secret = os.getenv('GITHUB_WEBHOOK_SECRET').encode('utf-8')  # Certifique-se de definir essa variável no servidor
+            secret = b'deploy_key_norden'
             signature = request.headers.get('X-Hub-Signature-256', '')  # Obtém a assinatura enviada pelo GitHub
             payload = request.body  # Corpo da requisição (dados enviados pelo GitHub)
 
