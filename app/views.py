@@ -93,7 +93,6 @@ def login_redirect(request):
     return redirect(url_redirect)
 
 
-
 # Configuração de log para capturar as ações
 logger = logging.getLogger(__name__)
 
