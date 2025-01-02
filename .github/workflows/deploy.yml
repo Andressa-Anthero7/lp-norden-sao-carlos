@@ -1,0 +1,44 @@
+name: Deploy to Lightsail
+
+on:
+  push:
+    branches:
+      - main  # Substitua pela branch que deseja monitorar
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H "${{ secrets.LIGHTSAIL_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Deploy to Lightsail
+        run: |
+          ssh ${{ secrets.USERNAME }}@${{ secrets.LIGHTSAIL_HOST }} << 'EOF'
+            # Caminho para o seu projeto no servidor
+            cd /home/ubuntu/lp-norden-sao-carlos
+            # Baixar a versão mais recente do código
+            git pull origin main
+            # Ativar ambiente virtual (se necessário)
+            source prod-venv/bin/activate
+            # Instalar dependências
+            pip install -r requirements.txt
+            # Executar migrações (se for Django)
+            python manage.py migrate
+            # Coletar arquivos estáticos (se for Django)
+            python manage.py collectstatic --noinput
+            # Reiniciar Gunicorn
+            sudo systemctl restart gunicorn
+            # Sair do diretorio do projeto
+            cd ..
+            # Reiniciar Nginx
+            sudo systemctl restart nginx
+          EOF
