@@ -92,7 +92,6 @@ def login_redirect(request):
     url_redirect = f'/accounts/login/{username}/dashboard/'  # URL do dashboard
     return redirect(url_redirect)
 
-
 # Configuração de log para capturar as ações
 logger = logging.getLogger(__name__)
 
