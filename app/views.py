@@ -97,7 +97,7 @@ import hashlib
 def webhook(request):
     if request.method == "POST":
         try:
-            secret = b'minha_senha_secreta'  # Mesmo valor configurado no GitHub
+            secret = b''  # Mesmo valor configurado no GitHub
             signature = request.headers.get('X-Hub-Signature-256', '')
             payload = request.body
             mac = hmac.new(secret, msg=payload, digestmod=hashlib.sha256)
