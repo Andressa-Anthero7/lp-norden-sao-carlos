@@ -13,6 +13,7 @@ import json
 import hmac
 import hashlib
 import os
+import logging
 
 # Create your views here.
 def index(request):
@@ -91,59 +92,46 @@ def login_redirect(request):
     url_redirect = f'/accounts/login/{username}/dashboard/'  # URL do dashboard
     return redirect(url_redirect)
 
-import hmac
-import hashlib
 
-import hmac
-import hashlib
-import subprocess
-import json
-import logging
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
 
-# Configurar logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+# Configuração de log para capturar as ações
+logger = logging.getLogger(__name__)
 
 @csrf_exempt
 def webhook(request):
     if request.method == "POST":
         try:
-            secret = os.getenv('GITHUB_WEBHOOK_SECRET').encode('utf-8')
-            signature = request.headers.get('X-Hub-Signature-256')
-            if not signature:
-                logging.warning("Cabeçalho X-Hub-Signature-256 ausente")
-                return JsonResponse({'error': 'Signature missing'}, status=403)
+            # Obtém o segredo da variável de ambiente (melhor prática de segurança)
+            secret = os.getenv('GITHUB_WEBHOOK_SECRET').encode('utf-8')  # Certifique-se de definir essa variável no servidor
+            signature = request.headers.get('X-Hub-Signature-256', '')  # Obtém a assinatura enviada pelo GitHub
+            payload = request.body  # Corpo da requisição (dados enviados pelo GitHub)
 
-            payload = request.body
+            # Calcula a assinatura usando o segredo e o corpo da requisição
             mac = hmac.new(secret, msg=payload, digestmod=hashlib.sha256)
             expected_signature = f"sha256={mac.hexdigest()}"
 
+            # Verifica se a assinatura recebida é válida comparando com a esperada
             if not hmac.compare_digest(signature, expected_signature):
-                logging.warning("Assinatura inválida")
+                logger.warning("Assinatura inválida recebida do GitHub")
                 return JsonResponse({'error': 'Invalid signature'}, status=403)
 
+            # Carrega o payload como JSON
             payload = json.loads(payload)
+
+            # Verifica se o evento é um push no branch 'dev'
             if payload.get('ref') == 'refs/heads/dev':
-                logging.info("Iniciando o deploy para o branch dev")
-                result = subprocess.run(['/home/ubuntu/deploy.sh'], capture_output=True, text=True)
-                if result.returncode == 0:
-                    logging.info("Deploy concluído com sucesso")
-                    return JsonResponse({'status': 'Deployed successfully'}, status=200)
-                else:
-                    logging.error(f"Erro no deploy: {result.stderr}")
-                    return JsonResponse({'error': 'Deploy failed', 'details': result.stderr}, status=500)
+                logger.info("Push detectado no branch 'dev', iniciando o deploy.")
+                # Chama o script de deploy no servidor
+                subprocess.call(['/home/ubuntu/deploy.sh'])
 
-            logging.info("Payload recebido, mas não é para o branch monitorado")
-            return JsonResponse({'message': 'No action taken'}, status=200)
+                # Retorna resposta de sucesso
+                return JsonResponse({'status': 'Deployed successfully'}, status=200)
+            else:
+                logger.info(f"Push para outro branch: {payload.get('ref')}")
+                return JsonResponse({'status': 'Not a push to dev branch'}, status=200)
 
-        except json.JSONDecodeError:
-            logging.error("Erro ao decodificar o payload JSON")
-            return JsonResponse({'error': 'Invalid JSON payload'}, status=400)
         except Exception as e:
-            logging.error(f"Erro inesperado: {str(e)}")
+            logger.error(f"Erro ao processar o webhook: {str(e)}")
             return JsonResponse({'error': str(e)}, status=500)
 
-    logging.warning("Requisição inválida")
     return JsonResponse({'message': 'Invalid request'}, status=400)
-
