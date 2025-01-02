@@ -12,6 +12,7 @@ from django.views.decorators.csrf import csrf_exempt
 import json 
 import hmac
 import hashlib
+import os
 
 # Create your views here.
 def index(request):
@@ -93,24 +94,56 @@ def login_redirect(request):
 import hmac
 import hashlib
 
+import hmac
+import hashlib
+import subprocess
+import json
+import logging
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+
+# Configurar logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
 @csrf_exempt
 def webhook(request):
     if request.method == "POST":
         try:
-            secret = b''  # Mesmo valor configurado no GitHub
-            signature = request.headers.get('X-Hub-Signature-256', '')
+            secret = os.getenv('GITHUB_WEBHOOK_SECRET').encode('utf-8')
+            signature = request.headers.get('X-Hub-Signature-256')
+            if not signature:
+                logging.warning("Cabeçalho X-Hub-Signature-256 ausente")
+                return JsonResponse({'error': 'Signature missing'}, status=403)
+
             payload = request.body
             mac = hmac.new(secret, msg=payload, digestmod=hashlib.sha256)
             expected_signature = f"sha256={mac.hexdigest()}"
 
             if not hmac.compare_digest(signature, expected_signature):
+                logging.warning("Assinatura inválida")
                 return JsonResponse({'error': 'Invalid signature'}, status=403)
 
             payload = json.loads(payload)
             if payload.get('ref') == 'refs/heads/dev':
-                subprocess.call(['/home/ubuntu/deploy.sh'])
-                return JsonResponse({'status': 'Deployed successfully'}, status=200)
+                logging.info("Iniciando o deploy para o branch dev")
+                result = subprocess.run(['/home/ubuntu/deploy.sh'], capture_output=True, text=True)
+                if result.returncode == 0:
+                    logging.info("Deploy concluído com sucesso")
+                    return JsonResponse({'status': 'Deployed successfully'}, status=200)
+                else:
+                    logging.error(f"Erro no deploy: {result.stderr}")
+                    return JsonResponse({'error': 'Deploy failed', 'details': result.stderr}, status=500)
+
+            logging.info("Payload recebido, mas não é para o branch monitorado")
+            return JsonResponse({'message': 'No action taken'}, status=200)
+
+        except json.JSONDecodeError:
+            logging.error("Erro ao decodificar o payload JSON")
+            return JsonResponse({'error': 'Invalid JSON payload'}, status=400)
         except Exception as e:
+            logging.error(f"Erro inesperado: {str(e)}")
             return JsonResponse({'error': str(e)}, status=500)
 
+    logging.warning("Requisição inválida")
     return JsonResponse({'message': 'Invalid request'}, status=400)
+
