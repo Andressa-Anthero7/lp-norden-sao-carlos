@@ -26,7 +26,7 @@ jobs:
             # Caminho para o seu projeto no servidor
             cd /home/ubuntu/lp-norden-sao-carlos
             # Baixar a versão mais recente do código
-            git pull origin main
+            git pull origin dev
             # Ativar ambiente virtual (se necessário)
             source prod-venv/bin/activate
             # Instalar dependências
