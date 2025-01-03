@@ -3,7 +3,7 @@ name: Deploy to Lightsail
 on:
   push:
     branches:
-      - main  # Substitua pela branch que deseja monitorar
+      - dev  # Substitua pela branch que deseja monitorar
 
 jobs:
   deploy:
