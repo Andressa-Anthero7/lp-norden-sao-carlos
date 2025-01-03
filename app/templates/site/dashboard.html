@@ -67,7 +67,7 @@
                                             formData.append('status_envelope', 'fa-envelope-open-text');
 
                                             const request = new XMLHttpRequest();
-                                            request.open('POST', 'http://afnordensaude.com.b8/status_leads/{{lead.pk}}/', true);
+                                            request.open('POST', 'http://afnordensaude.com.br/status_leads/{{lead.pk}}/', true);
                                             
                                             // Adiciona CSRF token no cabeçalho
                                             const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
@@ -76,9 +76,9 @@
                                             // Define callback para sucesso ou erro
                                             request.onload = function() {
                                                 if (request.status === 200) {
-                                                    
+                                                    alert('status 200')
                                                 } else {
-                                                    //alert('Erro ao atualizar status.');
+                                                    alert('Erro ao atualizar status.');
                                                 }
                                             };
 
