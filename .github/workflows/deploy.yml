@@ -17,12 +17,12 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa  # Corrige as permissões da chave privada
           ssh-keyscan -H "${{ secrets.LIGHTSAIL_HOST }}" >> ~/.ssh/known_hosts
 
       - name: Deploy to Lightsail
         run: |
-          ssh ${{ secrets.USERNAME }}@${{ secrets.LIGHTSAIL_HOST }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.LIGHTSAIL_HOST }} << 'EOF'
             # Caminho para o seu projeto no servidor
             cd /home/ubuntu/lp-norden-sao-carlos
             # Baixar a versão mais recente do código
@@ -37,7 +37,7 @@ jobs:
             python manage.py collectstatic --noinput
             # Reiniciar Gunicorn
             sudo systemctl restart gunicorn
-            # Sair do diretorio do projeto
+            # Sair do diretório do projeto
             cd ..
             # Reiniciar Nginx
             sudo systemctl restart nginx
