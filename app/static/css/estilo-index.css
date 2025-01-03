@@ -385,9 +385,10 @@ h1 {
 
     #btn-cadastra-se{
         position: absolute;
-        top:1250px;
+        top:1380px;
         left: 5%;
-        
+        padding: 0;
+        margin: 0;
     }
 
     .font-size-central-vendas{
