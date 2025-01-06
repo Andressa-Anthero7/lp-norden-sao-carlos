@@ -5,6 +5,7 @@ from datetime import datetime
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+from django.shortcuts import get_object_or_404
 # importação do webhook
 import subprocess
 from django.http import JsonResponse
@@ -25,7 +26,7 @@ def index(request):
         Leads.objects.create(nome_leads=nome_leads, whats_app_leads=whats_app_leads, data_recebimento=recebido_em)
         
         # Montar a mensagem
-        message = f"Olá, Adriana! Você recebeu novo lead - Nome: {nome_leads} - WhatsApp: {whats_app_leads}<br>Acesse: www.afunimedsaocarlos.com.br/accounts/login/adriana/dashboard/"
+        message = f"Olá, Adriana! Você recebeu novo lead - Nome: {nome_leads} - WhatsApp: {whats_app_leads}<br>Acesse: www.afnordensaude.com.br/accounts/login/adriana/dashboard/"
         
         config_wa = Config_WhatsApp.objects.values('numero_whats_app', 'chave_api_whats_app')
         print(config_wa)
@@ -52,7 +53,9 @@ def index(request):
             print(f"Status code: {response.status_code}")
             return render(request, 'site/agradecimento.html')
     else:
-        return render(request, 'site/index.html')
+        config_wa = Config_WhatsApp.objects.last()
+        print(config_wa)
+        return render(request, 'site/index.html',{'config_wa':config_wa})
 
 def agradecimento(request):
     return render(request, 'site/agradecimento.html')
@@ -134,3 +137,8 @@ def webhook(request):
             return JsonResponse({'error': str(e)}, status=500)
 
     return JsonResponse({'message': 'Invalid request'}, status=400)
+
+def remover_lead(request,pk):
+    lead_remover = get_object_or_404(Leads, pk=pk)
+    lead_remover.delete()
+    return JsonResponse({'Status': 'Leads Removido com Sucesso!!'}, status=200)

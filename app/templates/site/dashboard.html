@@ -82,9 +82,7 @@
                                                 }
                                             };
 
-                                            request.onerror = function() {
-                                                alert('Erro na requisição.');
-                                            };
+                                            
 
                                             request.send(formData);
                                             
@@ -129,15 +127,79 @@
                                     </button>
                                   </div>
                                   <div class="modal-body p-2 text-center">
-                                    <form class="p-3">
+                                    <form class="p-3" class="form" >
+                                        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                                         <div>Digite remover para confirmar a exclusão do Leads - Id-{{lead.pk}}</div>
                                         <div>
-                                            <input class="col-12 form" type="text" placeholder="Digite remover e clique no botão Confirma Exclusão"></div>
+                                            <input class="col-12 form-control input-deleta-leads" type="text" placeholder="Digite remover e clique no botão Confirma Exclusão"></div>
                                         </div>
+                                         <button type="button" class="btn btn-danger mx-5 px-5 confirmar-exclusao-leads btn-confirmar-exclusao-leads" disabled>Confirma Exclusão</button>
+                                         <script type="text/javascript">
+                                          $(document).on('keyup', '.input-deleta-leads', function () {
+                                            // Obtém o valor digitado no campo
+                                            let valorDigitado = $(this).val();
+
+                                            // Verifica se o valor é "remover"
+                                            if (valorDigitado.toLowerCase() === 'remover') {
+                                              // Ativa o botão removendo o atributo 'disabled'
+                                              $('.confirmar-exclusao-leads').removeAttr('disabled');
+                                            } else {
+                                              // Desativa o botão adicionando o atributo 'disabled'
+                                              $('.confirmar-exclusao-leads').attr('disabled', true);
+                                            }
+                                          });
+
+                                          // ENVIAR REQUISICAO COM DELETE
+                                            $(document).on('click', '.btn-confirmar-exclusao-leads', function () {
+                                                const leadId = {{lead.pk}};
+                                                const url = `http://127.0.0.1:8000/remover_lead/${leadId}/`; // URL dinâmica para o endpoint de exclusão
+                                                
+
+                                                // Criação da requisição
+                                                const request = new XMLHttpRequest();
+                                                request.open('DELETE', url, true); // Define o método como DELETE
+
+                                                // Adiciona o CSRF Token no cabeçalho da requisição
+                                                request.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));
+
+                                                // Configura o comportamento ao concluir a requisição
+                                                request.onload = function () {
+                                                    if (request.status === 200) {
+                                                        alert('Lead removido com sucesso!');
+                                                        location.reload(); // Recarrega a página após a exclusão
+                                                    } else {
+                                                        alert('Erro ao remover lead.');
+                                                    }
+                                                };
+
+                                                // Envia a requisição
+                                                request.send();
+                                            });
+
+                                            // Função para obter o CSRF Token dos cookies
+                                            function getCookie(name) {
+                                                let cookieValue = null;
+                                                if (document.cookie && document.cookie !== '') {
+                                                    const cookies = document.cookie.split(';');
+                                                    for (let i = 0; i < cookies.length; i++) {
+                                                        const cookie = cookies[i].trim();
+                                                        // Verifica se o cookie começa com o nome esperado
+                                                        if (cookie.substring(0, name.length + 1) === name + '=') {
+                                                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                                return cookieValue;
+                                            }
+
+                                        </script>
+
                                     </form>
                                   <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-danger">Confirma Exclusão</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                   
+
                                   </div>
                                 </div>
                               </div>
@@ -145,21 +207,16 @@
 
                             <button id="btn-fechar-modal-leads" type="button" class="btn btn-secondary close-modal" data-dismiss="modal">Fechar</button>
 
-                            <a class="btn btn-success" href="https://wa.me/55{{lead.whats_app_leads}}"  target="_blank"   >
+                            <a class="btn btn-success leads-{{lead.pk}}" href="https://wa.me/55{{lead.whats_app_leads}}"  target="_blank"   >
                                 <i class="fab fa-whatsapp text-white"> Iniciar Atendimento</i>
                             </a>
+
 
                           </div>
                         </div>
                       </div>
                     </div>
-                    <script type="text/javascript">
-                        $(document).ready(function() {
-                            $(document).on('blur','.modal', function(){
-                                window.location.reload();
-                            })
-                        });
-                    </script>
+                    
                     <!-- FINAL DO Modal -->
                     {% endfor %}
                 {% else %}
@@ -185,6 +242,13 @@
     </footer>
    
     <!-- jS -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+          $('.modal').on('hidden.bs.modal', function () {
+            window.location.reload();
+          });
+        });
+    </script>
      <script type="text/javascript" src="{% static 'js/script-index.js' %}"></script>
     
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
