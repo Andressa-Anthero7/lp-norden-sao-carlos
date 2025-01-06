@@ -122,7 +122,7 @@
                                         <div>
                                             <input class="col-12 form-control input-deleta-leads" type="text" placeholder="Digite remover e clique no botão Confirma Exclusão"></div>
                                         </div>
-                                         <button type="button" class="btn btn-danger mx-5 px-5 confirmar-exclusao-leads btn-confirmar-exclusao-leads" disabled>Confirma Exclusão</button>
+                                         <button type="button" class="btn btn-danger mx-5 px-5 confirmar-exclusao-leads btn-confirmar-exclusao-leads-{{lead.pk}}" disabled>Confirma Exclusão</button>
                                          <script type="text/javascript">
                                           $(document).on('keyup', '.input-deleta-leads', function () {
                                             // Obtém o valor digitado no campo
@@ -139,7 +139,7 @@
                                           });
 
                                           // ENVIAR REQUISICAO COM DELETE
-                                            $(document).on('click', '.btn-confirmar-exclusao-leads', function () {
+                                            $(document).on('click', '.btn-confirmar-exclusao-leads-{{lead.pk}}', function () {
                                                 const leadId = {{lead.pk}};
                                                 const url = `https://afnordensaude.com.br/remover_lead/${leadId}/`; // URL dinâmica para o endpoint de exclusão
                                                 
