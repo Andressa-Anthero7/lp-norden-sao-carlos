@@ -73,17 +73,6 @@
                                             const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
                                             request.setRequestHeader('X-CSRFToken', csrftoken);
                                         
-                                            // Define callback para sucesso ou erro
-                                            request.onload = function() {
-                                                if (request.status === 200) {
-                                                    alert('status 200')
-                                                } else {
-                                                    alert('Erro ao atualizar status.');
-                                                }
-                                            };
-
-                                            
-
                                             request.send(formData);
                                             
 
