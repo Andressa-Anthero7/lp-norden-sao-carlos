@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Oswald:wght@200..700&display=swap');
 
+
 *{
     margin: 0;
     padding: 0;
@@ -41,8 +42,62 @@ header .container {
     background-image: url('fundo-lp-norden-v1.png');
 }
 
+
+
+h1 {
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+#btn-flutuante{
+    position: fixed;
+    top:90%;
+    left: 85%;
+
+    transform: translate(-50%, -50%); /* Ajuste o botão ao centro */
+    z-index: 9999; /* Garante que o botão fique por cima de outros elementos */
+}
+
+.text-auxiliar-btn-whatsapp{
+    position: absolute;
+    left: 0;
+    bottom: 100%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    
+
+
+}
+
+.btn-whatsapp-flutuante {
+     color: #25D366;
+    font-size: 90px; /* Tamanho do ícone ou texto */
+    background-color: white;
+    border-radius: 50%; /* Faz o botão ser circular */
+    width: 80px; /* Largura do botão */
+    height: 80px; /* Altura do botão igual à largura */
+    display: flex; /* Ativa o Flexbox para centralização */
+    align-items: center; /* Centraliza verticalmente */
+    justify-content: center; /* Centraliza horizontalmente */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+    margin: 0; /* Remove margens externas */
+    padding: 0; /* Remove espaçamentos internos */
+    box-sizing: border-box; /* Inclui borda no tamanho total */
+    cursor: pointer;
+}
+
 .fa-whatsapp{
      color: #25D366;
+}
+
+
+
+.blink {
+    animation: blink-animation 5s steps(2, start) infinite;
+
 }
 
 #preloader {
@@ -76,40 +131,26 @@ header .container {
   }
 }
 
+
+
+/* Definição da animação */
+@keyframes blink-animation {
+    0%, 50% {
+        opacity: 1; /* Totalmente visível */
+    }
+    51%, 100% {
+        opacity: 0; /* Totalmente invisível */
+    }
+}
+
 .box-shadow{
     box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5); /* Sombras suaves */
 }
 
-#display-leads{
-    height: 90%;
-    overflow: auto;
+#text-btn-cadastra-se{
+    font-size: 1.5em;
 }
 
-li{
-    border:1px solid gray;
-    margin-bottom: 0.1em;
-
-}
-
-li:hover{
-    transform: scale(1.1);
-    -webkit-box-shadow: 0px 6px 13px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 6px 13px 0px rgba(0,0,0,0.75);
-    box-shadow: 0px 6px 13px 0px rgba(0,0,0,0.75);
-    max-width: 90%;
-    position: relative;
-    left: 5%;
-    border:none;
-    margin-bottom: 0.4em;
-    z-index: 1;
-    cursor: pointer;
-}
-
-footer{
-    position: absolute;
-    top: 90%;
-    text-align: center;
-}
 
 
 /* Responsividade */
@@ -132,31 +173,65 @@ footer{
         min-height: 8em;
     }
 
-    .fa-bars{
+    h1 {
         font-size: 3em;
+    
     }
 
-    strong{
-        display: block;
-        text-align: left;
+    #img-pronto-atendimento{
+    width: 100%;
+    z-index: -1;
     }
 
-    .info-leads{
-        display: block;
-    }
-
-    .modal-footer{
-        display: flex;
-    }
-
-    .modal-body input{
-        line-height: 2em;
-    }
-
-    #btn-fechar-modal-leads{
+    #texto-img-pronto-atendimento{
         position: relative;
-        left: -1.5em;
+        top:-8em;
     }
+
+    #texto-img-pronto-atendimento p{
+        font-size: 24px;
+        font-weight: 900;
+        text-shadow: 2px 2px black ;
+    }
+    
+    /* FORMULÁRIO */
+    #formulario{
+        position: relative;
+        top: -8em;
+    }
+
+    small{
+        font-size: 0.5em;
+        line-height: 0;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* SESSÃO COMPLEMENTAR */
+    #sessao-complementar{
+        position: relative;
+        top: -9em;
+    }
+
+    #btn-cadastra-se{
+        position: relative;
+        top: -8em;
+    }
+
+    #btn-cadastra-se a{
+        text-decoration: none;
+    }
+
+    #central-vendas{
+        position: relative;
+        top: -5em;
+    }
+
+    .font-size-central-vendas{
+        font-size: 1.5em;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
 
 }
 
@@ -184,32 +259,64 @@ footer{
         min-height: 8em;
     }
 
-    .modal-footer{
-        display: flex;
+    h1 {
+        font-size: 3em;
+    
     }
 
-    .modal-body input{
-        line-height: 2em;
+    #img-pronto-atendimento{
+    width: 100%;
+    z-index: -1;
     }
 
-    .fa-trash-alt{
+    #texto-img-pronto-atendimento{
         position: relative;
-        left: -3em;
+        top:-8em;
     }
 
-    #btn-fechar-modal-leads{
+    #texto-img-pronto-atendimento p{
+        font-size: 24px;
+        font-weight: 900;
+        text-shadow: 2px 2px black ;
+    }
+    
+    /* FORMULÁRIO */
+    #formulario{
         position: relative;
-        left: -4em;
+        top: -8em;
     }
 
-     footer{
-        position: absolute;
-        top: 90%;
-        left:13em;
-        text-align: center;
+    small{
+        font-size: 0.5em;
+        line-height: 0;
+        margin: 0;
+        padding: 0;
     }
 
+    /* SESSÃO COMPLEMENTAR */
+    #sessao-complementar{
+        position: relative;
+        top: -9em;
+    }
 
+    #btn-cadastra-se{
+        position: relative;
+        top: -8em;
+    }
+
+    #btn-cadastra-se a{
+        text-decoration: none;
+    }
+
+    #central-vendas{
+        position: relative;
+        top: -5em;
+    }
+
+    .font-size-central-vendas{
+        font-size: 1.5em;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
 }
 
 @media (min-width: 1080px) {
@@ -231,25 +338,61 @@ footer{
     main{
         flex-grow: 1;
     }
-
-    .fa-trash-alt{
-        position: relative;
-        left: -3em;
+    .content-section {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: flex-start;
+        width: 120%;
     }
 
-    #btn-fechar-modal-leads{
-        position: relative;
-        left: -4em;
+    #img-pronto-atendimento {
+        flex: 1 1 40%; /* Imagem ocupa 40% da largura */
+        max-width: 40%;
+        margin-right: 20px;
     }
 
-    .info-leads{
-        margin-right: 2em;
+    #texto-img-pronto-atendimento {
+        flex: 1 1 50%; /* Carousel ocupa 50% da largura */
+        max-width: 50%;
+    }
+
+    #texto-img-pronto-atendimento h1 {
+        font-size: 5em;
+    }
+
+    /* Ajuste para colocar formulário e sessão complementar lado a lado */
+    #formulario {
+        display: inline-block;
+        width: 45%; /* 45% da largura total */
+        vertical-align: top;
+        margin-top:0em;
+        padding: 3em;
+
     }
     
-    footer{
-        position: relative;
-        top: 90%;
+    #sessao-complementar {
+        display: inline-block;
+        width: 45%; /* 45% da largura total */
         text-align: center;
+        margin-top:1em;
+    }
+
+    #sessao-complementar img {
+        max-width: 100%; /* Redimensiona a imagem complementar */
+        height: auto;
+    }
+
+    #btn-cadastra-se{
+        position: absolute;
+        top:1850px;
+        left: 5%;
+        
+    }
+
+    .font-size-central-vendas{
+        font-size: 3em;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
 
     

@@ -67,7 +67,7 @@
                                             formData.append('status_envelope', 'fa-envelope-open-text');
 
                                             const request = new XMLHttpRequest();
-                                            request.open('POST', 'http://afnordensaude.com.br/status_leads/{{lead.pk}}/', true);
+                                            request.open('POST', 'https://afnordensaude.com.br/status_leads/{{lead.pk}}/', true);
                                             
                                             // Adiciona CSRF token no cabeçalho
                                             const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
@@ -205,7 +205,24 @@
 
                             <button id="btn-fechar-modal-leads" type="button" class="btn btn-secondary close-modal" data-dismiss="modal">Fechar</button>
 
-                            <a class="btn btn-success leads-{{lead.pk}}" href="https://wa.me/55{{lead.whats_app_leads}}"  target="_blank"   >
+                            <script type="text/javascript">
+                                $(document).on('click', '.atendimento-wa-{{lead.pk}}', function() {
+                                    // Captura o lead
+                                    let lead = "{{lead.whats_app_leads}}";
+
+                                    // Remove caracteres não numéricos
+                                    let waFormatado = lead.replace(/\D/g, '');
+
+                                    // Monta o link do WhatsApp
+                                    let whatsappLink = `https://wa.me/${waFormatado}`;
+
+                                    // Atribui o link ao botão ou elemento clicado
+                                    $(this).attr('href', whatsappLink);
+                                });
+                            </script>
+
+
+                            <a class="btn btn-success leads-{{lead.pk}} atendimento-wa-{{lead.pk}}"  target="_blank"   >
                                 <i class="fab fa-whatsapp text-white"> Iniciar Atendimento</i>
                             </a>
 

@@ -6,15 +6,9 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
-# importação do webhook
-import subprocess
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-import json 
-import hmac
-import hashlib
-import os
-import logging
+
 
 # Create your views here.
 def index(request):
@@ -95,49 +89,7 @@ def login_redirect(request):
     url_redirect = f'/accounts/login/{username}/dashboard/'  # URL do dashboard
     return redirect(url_redirect)
 
-# Configuração de log para capturar as ações
-logger = logging.getLogger(__name__)
-
-@csrf_exempt
-def webhook(request):
-    if request.method == "POST":
-        try:
-            # Obtém o segredo da variável de ambiente (melhor prática de segurança)
-            #secret = os.getenv('GITHUB_WEBHOOK_SECRET').encode('utf-8')  # Certifique-se de definir essa variável no servidor
-            secret = b'deploy_key_norden'
-            signature = request.headers.get('X-Hub-Signature-256', '')  # Obtém a assinatura enviada pelo GitHub
-            payload = request.body  # Corpo da requisição (dados enviados pelo GitHub)
-
-            # Calcula a assinatura usando o segredo e o corpo da requisição
-            mac = hmac.new(secret, msg=payload, digestmod=hashlib.sha256)
-            expected_signature = f"sha256={mac.hexdigest()}"
-
-            # Verifica se a assinatura recebida é válida comparando com a esperada
-            if not hmac.compare_digest(signature, expected_signature):
-                logger.warning("Assinatura inválida recebida do GitHub")
-                return JsonResponse({'error': 'Invalid signature'}, status=403)
-
-            # Carrega o payload como JSON
-            payload = json.loads(payload)
-
-            # Verifica se o evento é um push no branch 'dev'
-            if payload.get('ref') == 'refs/heads/dev':
-                logger.info("Push detectado no branch 'dev', iniciando o deploy.")
-                # Chama o script de deploy no servidor
-                subprocess.call(['/home/ubuntu/deploy.sh'])
-
-                # Retorna resposta de sucesso
-                return JsonResponse({'status': 'Deployed successfully'}, status=200)
-            else:
-                logger.info(f"Push para outro branch: {payload.get('ref')}")
-                return JsonResponse({'status': 'Not a push to dev branch'}, status=200)
-
-        except Exception as e:
-            logger.error(f"Erro ao processar o webhook: {str(e)}")
-            return JsonResponse({'error': str(e)}, status=500)
-
-    return JsonResponse({'message': 'Invalid request'}, status=400)
-
+@login_required
 def remover_lead(request,pk):
     lead_remover = get_object_or_404(Leads, pk=pk)
     lead_remover.delete()
