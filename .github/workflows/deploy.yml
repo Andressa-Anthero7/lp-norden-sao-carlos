@@ -3,7 +3,7 @@ name: Deploy to Lightsail
 on:
   push:
     branches:
-      - dev  # Branch monitorada
+      - producao  # Branch monitorada
 
 jobs:
   deploy:
@@ -38,7 +38,7 @@ jobs:
 
             # Garantir sincronização do repositório
             git fetch origin
-            git reset --hard origin/dev
+            git reset --hard origin/producao
 
             # Ativar o ambiente virtual e instalar dependências
             source ${VENV_DIR}/bin/activate
